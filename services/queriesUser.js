@@ -28,7 +28,7 @@ const getUserById = (request, response) => {
 // se inserta un nuevo usuario
 const createUser = (request, response) => {
   const { username, password } = request.body
-  db.query('INSERT INTO Usuario (username, password) VALUES ($1, $2) RETURNING *', [username, password], (error, results) => {
+  db.query('INSERT INTO Usuario (username, passwords) VALUES ($1, $2) RETURNING *', [username, password], (error, results) => {
     if (error) {
       throw error
     }
@@ -39,11 +39,11 @@ const createUser = (request, response) => {
 //se actualiza el usuario
 const updateUser = (request, response) => {
   const IDuser = parseInt(request.params.id)
-  const { name, email, phone } = request.body
+  const {username, passwords} = request.body
 
   db.query(
-    'UPDATE Usuario SET name = $1, email = $2, phone = $3 WHERE IDuser = $4',
-    [name, email, phone, IDuser],
+    'UPDATE Usuario SET username = $1, passwords = $2 WHERE IDuser = $3',
+    [username, passwords, IDuser],
     (error, results) => {
       if (error) {
         throw error
